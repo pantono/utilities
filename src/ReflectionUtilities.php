@@ -8,6 +8,7 @@ use Pantono\Contracts\Attributes\Locator;
 use Pantono\Contracts\Attributes\Lazy;
 use ReflectionProperty;
 use ReflectionNamedType;
+use Pantono\Contracts\Attributes\NoSave;
 
 class ReflectionUtilities
 {
@@ -22,7 +23,8 @@ class ReflectionUtilities
             'field_name' => StringUtilities::snakeCase($property->getName()),
             'filter' => null,
             'lazy' => null,
-            'format' => null
+            'format' => null,
+            'no_save' => null
         ];
         $type = $property->getType();
         if ($type instanceof ReflectionNamedType) {
@@ -41,6 +43,9 @@ class ReflectionUtilities
             }
             if (get_class($instance) === Lazy::class) {
                 $info['lazy'] = true;
+            }
+            if (get_class($instance) === NoSave::class) {
+                $info['no_save'] = true;
             }
         }
 
