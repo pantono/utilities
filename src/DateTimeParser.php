@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Pantono\Utilities;
@@ -43,7 +44,6 @@ class DateTimeParser
         try {
             return new DateTime($date);
         } catch (\Exception $e) {
-
         }
 
         return null;
@@ -92,7 +92,6 @@ class DateTimeParser
         try {
             return new \DateTimeImmutable($date);
         } catch (\Exception $e) {
-
         }
 
         return null;
