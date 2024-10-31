@@ -39,7 +39,12 @@ class ReflectionUtilities
                 $info['filter'] = $instance->filter;
             }
             if (get_class($instance) === Locator::class) {
-                $info['hydrator'] = $instance->serviceName . '::' . $instance->methodName;
+                if ($instance->serviceName) {
+                    $info['hydrator'] = $instance->serviceName . '::' . $instance->methodName;
+                }
+                if ($instance->className) {
+                    $info['hydrator'] = $instance->className . '::' . $instance->methodName;
+                }
             }
             if (get_class($instance) === Lazy::class) {
                 $info['lazy'] = true;
