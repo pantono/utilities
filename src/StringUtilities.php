@@ -37,6 +37,17 @@ class StringUtilities
         return ucfirst($str);
     }
 
+    public static function camelCaseToWords(string $string): string
+    {
+        $pattern = '/(?<!^)(?=[A-Z])/';
+        $words = preg_split($pattern, $string);
+        if ($words === false) {
+            return $string;
+        }
+        return implode(' ', array_map('ucfirst', array_map('strtolower', $words)));
+    }
+
+
     public static function maskEmail(string $email): string
     {
         if (!str_contains($email, '@')) {
