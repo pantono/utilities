@@ -9,11 +9,12 @@ use Pantono\Contracts\Attributes\Lazy;
 use ReflectionProperty;
 use ReflectionNamedType;
 use Pantono\Contracts\Attributes\NoSave;
+use Pantono\Contracts\Attributes\NoFill;
 
 class ReflectionUtilities
 {
     /**
-     * @return array{type: ?string, hydrator: ?string, field_name: string, filter: ?string, lazy: ?bool, format: ?string}
+     * @return array{type: ?string, hydrator: ?string, field_name: string, filter: ?string, lazy: ?bool, format: ?string, no_save: ?bool, no_fill: ?bool}
      */
     public static function parseAttributesIntoConfig(ReflectionProperty $property): array
     {
@@ -24,7 +25,8 @@ class ReflectionUtilities
             'filter' => null,
             'lazy' => null,
             'format' => null,
-            'no_save' => null
+            'no_save' => null,
+            'no_fill' => null
         ];
         $type = $property->getType();
         if ($type instanceof ReflectionNamedType) {
@@ -52,8 +54,37 @@ class ReflectionUtilities
             if (get_class($instance) === NoSave::class) {
                 $info['no_save'] = true;
             }
+            if (get_class($instance) === NoFill::class) {
+                $info['no_fill'] = true;
+            }
         }
 
         return $info;
+    }
+
+    /**
+     * @return \ReflectionAttribute<object>[]
+     * @throws \ReflectionException
+     */
+    public static function getAttributes(string $className, string $propertyName): array
+    {
+        if (!class_exists($className)) {
+            return [];
+        }
+        if (!method_exists($className, $propertyName)) {
+            return [];
+        }
+        $property = new ReflectionProperty($className, $propertyName);
+        return $property->getAttributes();
+    }
+
+    public static function hasAttributes(string $className, string $propertyName, string $attributeClass): bool
+    {
+        foreach (self::getAttributes($className, $propertyName) as $attribute) {
+            if ($attribute->getName() === $attributeClass) {
+                return true;
+            }
+        }
+        return false;
     }
 }
