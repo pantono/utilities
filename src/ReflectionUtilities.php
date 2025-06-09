@@ -10,6 +10,7 @@ use ReflectionProperty;
 use ReflectionNamedType;
 use Pantono\Contracts\Attributes\NoSave;
 use Pantono\Contracts\Attributes\NoFill;
+use Pantono\Utilities\Model\PropertyConfig;
 
 class ReflectionUtilities
 {
@@ -60,6 +61,44 @@ class ReflectionUtilities
         }
 
         return $info;
+    }
+
+    public static function parseAttributesIntoConfigModel(ReflectionProperty $property): PropertyConfig
+    {
+        $config = new PropertyConfig();
+        $type = $property->getType();
+        if ($type instanceof ReflectionNamedType) {
+            $config->setType($type->getName());
+        }
+        foreach ($property->getAttributes() as $attribute) {
+            $instance = $attribute->newInstance();
+            if (get_class($instance) === FieldName::class) {
+                $config->setFieldName($instance->name);
+            }
+            if (get_class($instance) === Filter::class) {
+                $config->setFilter($instance->filter);
+            }
+            if (get_class($instance) === Locator::class) {
+                if ($instance->serviceName) {
+                    $config->setHydrator($instance->serviceName . '::' . $instance->methodName);
+                }
+                if ($instance->className) {
+                    $config->setHydrator($instance->className . '::' . $instance->methodName);;
+                }
+            }
+            if (get_class($instance) === Lazy::class) {
+                $config->setLazy(true);
+            }
+            if (get_class($instance) === NoSave::class) {
+                $config->setNoSave(true);
+            }
+            if (get_class($instance) === NoFill::class) {
+                $config->setNoFill(true);
+            }
+            $config->addAttribute($attribute);
+        }
+
+        return $config;
     }
 
     /**
