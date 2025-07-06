@@ -11,6 +11,7 @@ use ReflectionNamedType;
 use Pantono\Contracts\Attributes\NoSave;
 use Pantono\Contracts\Attributes\NoFill;
 use Pantono\Utilities\Model\PropertyConfig;
+use Pantono\Contracts\Attributes\DateFormat;
 
 class ReflectionUtilities
 {
@@ -57,6 +58,9 @@ class ReflectionUtilities
             }
             if (get_class($instance) === NoFill::class) {
                 $info['no_fill'] = true;
+            }
+            if (get_class($instance) === DateFormat::class) {
+                $info['format'] = $instance->format;
             }
         }
 
