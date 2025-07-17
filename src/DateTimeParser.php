@@ -9,6 +9,9 @@ use DateTimeImmutable;
 
 class DateTimeParser
 {
+    const DATE_FORMAT = 'Y-m-d';
+    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     public static function parseDate(string $date): ?DateTime
     {
         if (empty($date)) {
