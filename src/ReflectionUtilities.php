@@ -27,6 +27,9 @@ class ReflectionUtilities
             'filter' => null,
             'lazy' => null,
             'format' => null,
+            'hydrator_class' => null,
+            'hydrator_method' => null,
+            'hydrator_service' => null,
             'no_save' => null,
             'no_fill' => null
         ];
@@ -43,10 +46,13 @@ class ReflectionUtilities
                 $info['filter'] = $instance->filter;
             }
             if (get_class($instance) === Locator::class) {
+                $info['hydrator_method'] = $instance->methodName;
                 if ($instance->serviceName) {
+                    $info['hydrator_service'] = $instance->serviceName;
                     $info['hydrator'] = $instance->serviceName . '::' . $instance->methodName;
                 }
                 if ($instance->className) {
+                    $info['hydrator_class'] = $instance->className;
                     $info['hydrator'] = $instance->className . '::' . $instance->methodName;
                 }
             }
