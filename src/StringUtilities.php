@@ -101,4 +101,30 @@ class StringUtilities
 
         return $string;
     }
+
+
+    public static function boolValue(mixed $input): bool
+    {
+        if (is_bool($input)) {
+            return $input;
+        }
+
+        if (is_string($input)) {
+            $value = strtolower(trim($input));
+            return match ($value) {
+                '1', 'true', 'on', 'yes', 'y' => true,
+                '0', 'false', 'off', 'no', 'n' => false,
+                default => false,
+            };
+        }
+
+        if (is_int($input)) {
+            return $input === 1;
+        }
+        if (is_float($input)) {
+            return (int)$input === 1;
+        }
+
+        return false;
+    }
 }
