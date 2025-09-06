@@ -18,7 +18,8 @@ class ApplicationHelper
             return constant('RELEASE_TIME');
         }
 
-        return strval(time());
+        define('RELEASE_TIME', strval(time()));
+        return constant('RELEASE_TIME');
     }
 
     public static function getEnv(): string
