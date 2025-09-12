@@ -16,7 +16,7 @@ use Pantono\Contracts\Attributes\DateFormat;
 class ReflectionUtilities
 {
     /**
-     * @return array{type: ?string, hydrator: ?string, field_name: string, filter: ?string, lazy: ?bool, format: ?string, no_save: ?bool, no_fill: ?bool}
+     * @return array{type: ?string, hydrator_class: ?string, hydrator_method: ?string, field_name: string, filter: ?string, lazy: ?bool, format: ?string, no_save: ?bool, no_fill: ?bool}
      */
     public static function parseAttributesIntoConfig(ReflectionProperty $property): array
     {
