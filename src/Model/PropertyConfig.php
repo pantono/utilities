@@ -124,7 +124,7 @@ class PropertyConfig
     public function hasAttribute(string $attributeClassName): bool
     {
         foreach ($this->attributes as $attribute) {
-            if (get_class($attribute) === $attributeClassName) {
+            if ($attribute->getName() === $attributeClassName) {
                 return true;
             }
         }
