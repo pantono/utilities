@@ -140,7 +140,7 @@ class ReflectionUtilities
     /**
      * @return array{namespace: ?string, uses: array<string, string>}
      */
-    public static function parseFile(string $filePath): array
+    public static function parseUseStatements(string $filePath): array
     {
         $code = file_get_contents($filePath);
         if ($code === false) {
