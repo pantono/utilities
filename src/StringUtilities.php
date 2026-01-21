@@ -127,4 +127,20 @@ class StringUtilities
 
         return false;
     }
+
+    public static function isBinary(string $input): bool
+    {
+        if ($input === '') {
+            return false;
+        }
+
+        // If it's not valid UTF-8, treat as binary
+        if (!mb_check_encoding($input, 'UTF-8')) {
+            return true;
+        }
+
+        // Detect control characters excluding common whitespace
+        // Allow: \t (09), \n (0A), \r (0D)
+        return preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $input) === 1;
+    }
 }
