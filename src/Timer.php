@@ -54,4 +54,16 @@ class Timer
         $time += $diff->f;
         return $time;
     }
+
+    public static function getAllTimesSorted(): array
+    {
+        $timers = [];
+        foreach (self::$timers as $name => $timer) {
+            $timers[] = ['name' => $name, 'time' => self::getTime($name)];
+        }
+        usort($timers, function ($a, $b) {
+            return $a['time'] <=> $b['time'];
+        });
+        return $timers;
+    }
 }
