@@ -127,6 +127,19 @@ class ReflectionUtilities
         return $property->getAttributes();
     }
 
+    /**
+     * @param class-string $className
+     * @return \ReflectionAttribute<object>[]
+     */
+    public static function getClassAttributes(string $className): array
+    {
+        if (!class_exists($className)) {
+            return [];
+        }
+        $class = new \ReflectionClass($className);
+        return $class->getAttributes();
+    }
+
     public static function hasAttributes(string $className, string $propertyName, string $attributeClass): bool
     {
         foreach (self::getAttributes($className, $propertyName) as $attribute) {
