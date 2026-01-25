@@ -55,6 +55,9 @@ class Timer
         return $time;
     }
 
+    /**
+     * @return array<int, array{name: string, time: float|null}>
+     */
     public static function getAllTimesSorted(): array
     {
         $timers = [];
