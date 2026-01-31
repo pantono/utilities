@@ -11,6 +11,11 @@ class EphemeralCacheHelper
      */
     public static array $cache = [];
 
+    public static function get(string $key):mixed
+    {
+        return self::$cache[$key] ?? null;
+    }
+
     public static function getItem(string $key, callable $data): mixed
     {
         if (!isset(self::$cache[$key])) {
