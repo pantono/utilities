@@ -30,4 +30,10 @@ class ApplicationHelper
 
         throw new \RuntimeException('APPLICATION_ENV not set');
     }
+
+    public static function appendTablePrefix(string $input): string
+    {
+        $prefix = isset($_ENV['table_prefix']) ? $_ENV['table_prefix'] . '_' : '';
+        return $prefix . $input;
+    }
 }
