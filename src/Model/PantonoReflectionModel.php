@@ -41,7 +41,7 @@ class PantonoReflectionModel
             return [
                 'serviceName' => $instance->serviceName,
                 'methodName' => $instance->methodName,
-                'classname' => $instance->className
+                'className' => $instance->className
             ];
         }
         return null;
