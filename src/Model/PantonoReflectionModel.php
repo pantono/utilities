@@ -97,8 +97,13 @@ class PantonoReflectionModel
         return array_any($this->properties, fn(PantonoReflectionProperty $property): bool => $property->isLazy());
     }
 
+    public function hasRelations(): bool
+    {
+        return array_any($this->properties, fn(PantonoReflectionProperty $property): bool => $property->getOneToManyModel() || $property->getOneToOne());
+    }
+
     public function isCreateProxy(): bool
     {
-        return $this->isEagerLoad() || $this->hasLazyLookups();
+        return $this->isEagerLoad() || $this->hasLazyLookups() || $this->hasRelations();
     }
 }
