@@ -5,6 +5,7 @@ namespace Pantono\Utilities\Model;
 use Pantono\Contracts\Attributes\Locator;
 use Pantono\Contracts\Attributes\DatabaseTable;
 use Pantono\Contracts\Attributes\EagerLoad;
+use Pantono\Utilities\ApplicationHelper;
 
 /**
  * @template T of object
@@ -49,7 +50,11 @@ class PantonoReflectionModel
 
     public function getDatabaseTable(): ?string
     {
-        return $this->getAttributeValue(DatabaseTable::class, 'table');
+        $value = $this->getAttributeValue(DatabaseTable::class, 'table');
+        if (!$value) {
+            return null;
+        }
+        return ApplicationHelper::appendTablePrefix($value);
     }
 
     public function getDatabaseIdColumn(): ?string
