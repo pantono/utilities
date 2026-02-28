@@ -13,6 +13,7 @@ use Pantono\Contracts\Attributes\DateFormat;
 use Pantono\Contracts\Attributes\Database\OneToMany;
 use Pantono\Contracts\Attributes\Database\ManyToOne;
 use Pantono\Contracts\Attributes\Database\OneToOne;
+use Pantono\Contracts\Attributes\Database\ManyToMany;
 
 class PantonoReflectionProperty
 {
@@ -144,6 +145,26 @@ class PantonoReflectionProperty
     public function getOneToOne(): ?string
     {
         return $this->getAttributeValue(OneToOne::class, 'targetModel');
+    }
+
+    public function getManyToManyModel(): ?string
+    {
+        return $this->getAttributeValue(ManyToMany::class, 'targetModel');
+    }
+
+    public function getManyToManyJoinTable(): ?string
+    {
+        return $this->getAttributeValue(ManyToMany::class, 'joinTable');
+    }
+
+    public function getManyToManyJoinColumn(): ?string
+    {
+        return $this->getAttributeValue(ManyToMany::class, 'joinColumn');
+    }
+
+    public function getManyToManyInverseJoinColumn(): ?string
+    {
+        return $this->getAttributeValue(ManyToMany::class, 'inverseJoinColumn');
     }
 
     /**
