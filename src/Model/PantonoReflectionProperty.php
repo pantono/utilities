@@ -30,6 +30,11 @@ class PantonoReflectionProperty
         if ($field) {
             return $field;
         }
+        return $this->getPropertyNameSnakeCase();
+    }
+
+    public function getPropertyNameSnakeCase(): string
+    {
         return StringUtilities::snakeCase($this->property->getName());
     }
 
