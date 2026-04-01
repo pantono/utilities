@@ -51,6 +51,11 @@ class PantonoReflectionProperty
         return in_array($this->getType(), ['string', 'int', 'float', 'bool']);
     }
 
+    public function isBoolean(): bool
+    {
+        return $this->getType() === 'bool';
+    }
+
     public function isDateType(): bool
     {
         return in_array($this->getType(), ['DateTime', 'DateTimeImmutable', 'DateTimeInterface']);
@@ -119,7 +124,11 @@ class PantonoReflectionProperty
 
     public function getGetter(): string
     {
-        return lcfirst(StringUtilities::camelCase('get' . ucfirst($this->property->getName())));
+        $prefix = 'get';
+        if ($this->isBoolean()) {
+            $prefix = 'is';
+        }
+        return lcfirst(StringUtilities::camelCase($prefix . ucfirst($this->property->getName())));
     }
 
     public function getSetter(): string
