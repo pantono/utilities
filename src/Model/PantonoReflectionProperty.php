@@ -201,4 +201,12 @@ class PantonoReflectionProperty
         }
         return null;
     }
+
+    public function isNullable(): bool
+    {
+        if (!$this->property->getType()) {
+            return false;
+        }
+        return $this->property->getType()->allowsNull();
+    }
 }
