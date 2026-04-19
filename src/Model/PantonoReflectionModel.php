@@ -35,6 +35,9 @@ class PantonoReflectionModel
         }
     }
 
+    /**
+     * @return array{serviceName: string|null, methodName: string|null, className: string|null}|null
+     */
     public function getLocator(): ?array
     {
         foreach ($this->reflection->getAttributes(Locator::class) as $attribute) {

@@ -104,6 +104,9 @@ class PantonoReflectionProperty
         return $this->getAttributeValue(DateFormat::class, 'format');
     }
 
+    /**
+     * @return array{serviceName: string|null, methodName: string|null, className: string|null}|null
+     */
     public function getLocator(): ?array
     {
         foreach ($this->property->getAttributes() as $attribute) {
