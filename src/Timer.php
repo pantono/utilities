@@ -69,4 +69,23 @@ class Timer
         });
         return $timers;
     }
+
+    /**
+     * @return array<string, float>
+     */
+    public static function listTimersMillisecond(): array
+    {
+        $timers = [];
+        foreach (self::$timers as $name => $timer) {
+            $timers[] = ['name' => $name, 'time' => self::getTime($name)];
+        }
+        usort($timers, function ($a, $b) {
+            return $a['time'] <=> $b['time'];
+        });
+        $msTimers = [];
+        foreach ($timers as $timer) {
+            $msTimers[$timer['name']] = $timer['time'] * 1000;
+        }
+        return $msTimers;
+    }
 }
