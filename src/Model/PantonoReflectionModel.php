@@ -102,7 +102,7 @@ class PantonoReflectionModel
 
     public function hasRelations(): bool
     {
-        return array_any($this->properties, fn(PantonoReflectionProperty $property): bool => $property->getOneToManyModel() || $property->getOneToOne());
+        return array_any($this->properties, fn(PantonoReflectionProperty $property): bool => $property->getOneToManyModel() || $property->getOneToOne() || $property->getManyToManyModel());
     }
 
     public function isCreateProxy(): bool
