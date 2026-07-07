@@ -33,6 +33,11 @@ class PantonoReflectionModel
         foreach ($this->reflection->getProperties() as $property) {
             $this->properties[] = new PantonoReflectionProperty($property);
         }
+        if ($this->reflection->getParentClass()) {
+            foreach ($this->reflection->getParentClass()->getProperties() as $property) {
+                $this->properties[] = new PantonoReflectionProperty($property);
+            }
+        }
     }
 
     /**
