@@ -143,4 +143,9 @@ class StringUtilities
         // Allow: \t (09), \n (0A), \r (0D)
         return preg_match('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', $input) === 1;
     }
+
+    public static function isStringable(mixed $var): bool
+    {
+        return $var === null || is_scalar($var) || (is_object($var) && method_exists($var, '__toString'));
+    }
 }
