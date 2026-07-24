@@ -36,4 +36,32 @@ class ApplicationHelper
         $prefix = isset($_ENV['TABLE_PREFIX']) ? $_ENV['TABLE_PREFIX'] . '_' : '';
         return $prefix . $input;
     }
+
+    public static function interpolateEnv(mixed $value): mixed
+    {
+        if (is_array($value)) {
+            return array_map(function ($v) {
+                return self::interpolateEnv($v);
+            }, $value);
+        }
+
+        if (!is_string($value)) {
+            return $value;
+        }
+
+        return preg_replace_callback('/\$\{([A-Za-z_][A-Za-z0-9_]*)(?::([^}]*))?}/', function ($matches) {
+            $var = $matches[1];
+            $default = $matches[2] ?? null;
+
+            if (array_key_exists($var, $_ENV)) {
+                return (string)$_ENV[$var];
+            }
+
+            if ($default !== null) {
+                return $default;
+            }
+
+            return $matches[0];
+        }, $value);
+    }
 }
