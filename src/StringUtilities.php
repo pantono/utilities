@@ -11,6 +11,11 @@ class StringUtilities
         return base64_encode(openssl_random_pseudo_bytes($randomBytes));
     }
 
+    public static function generateUrlSafeToken(int $randomBytes = 100): string
+    {
+        return rtrim(strtr(self::generateRandomToken($randomBytes), '+/', '-_'), '=');
+    }
+
     public static function snakeCase(string $string): string
     {
         preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
