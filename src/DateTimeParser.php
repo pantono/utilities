@@ -6,6 +6,7 @@ namespace Pantono\Utilities;
 
 use DateTime;
 use DateTimeImmutable;
+use Pantono\Utilities\Exception\UnableToParseDate;
 
 class DateTimeParser
 {
@@ -50,6 +51,15 @@ class DateTimeParser
         }
 
         return null;
+    }
+
+    public static function parseDateOrThrow(string $date): DateTime
+    {
+        $date = self::parseDate($date);
+        if ($date === null) {
+            throw new UnableToParseDate('Unable to parse ' . $date);
+        }
+        return $date;
     }
 
     public static function parseDateWithFormat(string $date, string $format): ?string
@@ -98,6 +108,15 @@ class DateTimeParser
         }
 
         return null;
+    }
+
+    public static function parseDateImmutableOrThrow(string $date): DateTimeImmutable
+    {
+        $date = self::parseDateImmutable($date);
+        if ($date === null) {
+            throw new UnableToParseDate('Unable to parse ' . $date);
+        }
+        return $date;
     }
 
     public static function diffInMinutes(\DateTimeInterface $start, \DateTimeInterface $end): ?int
